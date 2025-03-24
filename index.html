@@ -68,18 +68,30 @@
             <source src="./song/song.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
-          <audio id="audio" autoplay playsinline muted>
+          <audio id="audio" autoplay playsinline muted loop>
             <source src="./song/song.ogg" type="audio/ogg">
             Your browser does not support the audio element.
           </audio>  
           <script>
-            window.onload = function () {
-                setTimeout(() => {
-                    var audio = document.getElementById("audio");
-                    audio.muted = false; 
-                    audio.play().catch(err => console.log("Autoplay blocked:", err));
-                }, 1000); // Delay to allow the page to fully load
-            };
+            document.addEventListener("DOMContentLoaded", () => {
+            const audio = document.getElementById("audio");
+
+            // Try playing immediately
+            audio.play().catch(err => {
+            console.log("Autoplay blocked, waiting for interaction...");
+
+            // Wait for user interaction
+            document.addEventListener("click", () => {
+                audio.muted = false;
+                audio.play().catch(err => console.log("Still blocked:", err));
+              }, { once: true });
+
+            document.addEventListener("touchstart", () => {
+                audio.muted = false;
+                audio.play().catch(err => console.log("Still blocked:", err));
+              }, { once: true });
+              });
+            });
           </script>      
         </div>
       </div>
