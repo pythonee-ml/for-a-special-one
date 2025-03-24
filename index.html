@@ -64,35 +64,31 @@
             <source src="./song/song.mpeg" type="audio/mpeg">
             Your browser does not support the audio element.
           </audio>
-          <audio id="audio" controls>
-            <source src="https://file-examples.com/storage/fe66aef27b8b3c5782f3c44/2017/11/file_example_MP3_700KB.mp3" type="audio/mp3">
+          <audio id="mp3Audio" controls>
+            <source src="./song/song.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
-          <audio id="audio" autoplay playsinline muted loop>
-            <source src="./song/song.ogg" type="audio/ogg">
-            Your browser does not support the audio element.
-          </audio>  
           <script>
             document.addEventListener("DOMContentLoaded", () => {
-              const audio = document.getElementById("audio");
-          
-              function tryPlay() {
-                audio.muted = false; // Ensure it's unmuted
-                audio.play().then(() => {
-                  console.log("✅ Audio playing");
+              const mp3Audio = document.getElementById("mp3Audio");
+      
+              function playMP3() {
+                mp3Audio.muted = false; // Ensure it's unmuted
+                mp3Audio.play().then(() => {
+                  console.log("✅ MP3 Audio playing");
                 }).catch((err) => {
-                  console.log("❌ Autoplay blocked:", err);
+                  console.log("❌ MP3 Autoplay blocked, waiting for user interaction:", err);
                 });
               }
-          
+      
               // Try autoplay on load
-              tryPlay();
-          
-              // If autoplay fails, wait for user interaction
-              document.addEventListener("click", tryPlay, { once: true });
-              document.addEventListener("touchstart", tryPlay, { once: true });
+              playMP3();
+      
+              // If autoplay fails, play on first user tap/click
+              document.addEventListener("click", playMP3, { once: true });
+              document.addEventListener("touchstart", playMP3, { once: true });
             });
-          </script>    
+          </script>
         </div>
       </div>
       <div class="seven">
