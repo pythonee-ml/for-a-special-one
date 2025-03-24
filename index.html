@@ -63,17 +63,22 @@
           <audio id="audio" controls muted autoplay playsinline>
             <source src="./song/song.mpeg" type="audio/mpeg">
             Your browser does not support the audio element.
-            <script>
-              document.addEventListener("DOMContentLoaded", function() {
-                var audioMpeg = document.getElementById("audio-mpeg");
-                var audioMp3 = document.getElementById("audio-mp3");
-                if (audioMpeg.canPlayType("audio/mpeg")) {
-                  audioMpeg.play();
-                } else if (audioMp3.canPlayType("audio/mp3")) {
-                  audioMp3.play();
-                }
-              });
-            </script>
+        </audio>
+        <script>
+          document.addEventListener("DOMContentLoaded", function() {
+            var audioMpeg = document.getElementById("audio-mpeg");
+            var audioMp3 = document.getElementById("audio-mp3");
+            if (audioMpeg.canPlayType("audio/mpeg")) {
+              audioMpeg.play();
+            } else if (audioMp3.canPlayType("audio/mp3")) {
+              audioMp3.play();
+            }
+          });
+        </script>
+        <audio id="audio-mp3" controls muted>
+          <source src="./song/song.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>        
         </div>
       </div>
       <div class="seven">
