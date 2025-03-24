@@ -71,24 +71,23 @@
           <script>
             document.addEventListener("DOMContentLoaded", () => {
               const mp3Audio = document.getElementById("mp3Audio");
-      
-              function playMP3() {
-                mp3Audio.muted = false; // Ensure it's unmuted
+          
+              function forcePlay() {
                 mp3Audio.play().then(() => {
-                  console.log("✅ MP3 Audio playing");
+                  console.log("✅ Autoplay started (muted)");
+                  setTimeout(() => {
+                    mp3Audio.muted = false; // Unmute after 1 sec
+                    console.log("🔊 Unmuted after start");
+                  }, 1000);
                 }).catch((err) => {
-                  console.log("❌ MP3 Autoplay blocked, waiting for user interaction:", err);
+                  console.log("❌ Autoplay blocked:", err);
                 });
               }
-      
-              // Try autoplay on load
-              playMP3();
-      
-              // If autoplay fails, play on first user tap/click
-              document.addEventListener("click", playMP3, { once: true });
-              document.addEventListener("touchstart", playMP3, { once: true });
+          
+              forcePlay();
             });
           </script>
+          
         </div>
       </div>
       <div class="seven">
