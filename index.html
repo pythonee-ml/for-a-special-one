@@ -72,22 +72,26 @@
             document.addEventListener("DOMContentLoaded", () => {
               const mp3Audio = document.getElementById("mp3Audio");
           
-              function forcePlay() {
+              function tryPlayAudio() {
                 mp3Audio.play().then(() => {
-                  console.log("✅ Autoplay started (muted)");
+                  console.log("✅ Autoplay started successfully.");
                   setTimeout(() => {
-                    mp3Audio.muted = false; // Unmute after 1 sec
-                    console.log("🔊 Unmuted after start");
-                  }, 1000);
-                }).catch((err) => {
-                  console.log("❌ Autoplay blocked:", err);
+                    mp3Audio.muted = false; // Unmute after a short delay
+                    console.log("🔊 Unmuted after start.");
+                  }, 500);
+                }).catch(err => {
+                  console.log("❌ Autoplay blocked. Waiting for user interaction...", err);
                 });
               }
           
-              forcePlay();
+              // Try autoplay immediately
+              tryPlayAudio();
+          
+              // If autoplay is blocked, retry on first user interaction
+              document.addEventListener("click", tryPlayAudio, { once: true });
+              document.addEventListener("touchstart", tryPlayAudio, { once: true });
             });
           </script>
-          
         </div>
       </div>
       <div class="seven">
