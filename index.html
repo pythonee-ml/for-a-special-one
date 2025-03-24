@@ -74,25 +74,25 @@
           </audio>  
           <script>
             document.addEventListener("DOMContentLoaded", () => {
-            const audio = document.getElementById("audio");
-
-            // Try playing immediately
-            audio.play().catch(err => {
-            console.log("Autoplay blocked, waiting for interaction...");
-
-            // Wait for user interaction
-            document.addEventListener("click", () => {
-                audio.muted = false;
-                audio.play().catch(err => console.log("Still blocked:", err));
-              }, { once: true });
-
-            document.addEventListener("touchstart", () => {
-                audio.muted = false;
-                audio.play().catch(err => console.log("Still blocked:", err));
-              }, { once: true });
-              });
+              const audio = document.getElementById("audio");
+          
+              function tryPlay() {
+                audio.muted = false; // Ensure it's unmuted
+                audio.play().then(() => {
+                  console.log("✅ Audio playing");
+                }).catch((err) => {
+                  console.log("❌ Autoplay blocked:", err);
+                });
+              }
+          
+              // Try autoplay on load
+              tryPlay();
+          
+              // If autoplay fails, wait for user interaction
+              document.addEventListener("click", tryPlay, { once: true });
+              document.addEventListener("touchstart", tryPlay, { once: true });
             });
-          </script>      
+          </script>    
         </div>
       </div>
       <div class="seven">
