@@ -64,34 +64,37 @@
             <source src="./song/song.mpeg" type="audio/mpeg">
             Your browser does not support the audio element.
           </audio>
+          <video id="silentVideo" playsinline muted loop style="position: absolute; width: 1px; height: 1px; opacity: 0;">
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+          </video>
+        
           <audio id="mp3Audio" controls>
             <source src="./song/song.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
           <script>
-            document.addEventListener("DOMContentLoaded", () => {
+            document.addEventListener("DOMContentLoaded", async () => {
+              const silentVideo = document.getElementById("silentVideo");
               const mp3Audio = document.getElementById("mp3Audio");
           
-              function tryPlayAudio() {
-                mp3Audio.play().then(() => {
-                  console.log("✅ Autoplay started successfully.");
-                  setTimeout(() => {
-                    mp3Audio.muted = false; // Unmute after a short delay
-                    console.log("🔊 Unmuted after start.");
-                  }, 500);
-                }).catch(err => {
-                  console.log("❌ Autoplay blocked. Waiting for user interaction...", err);
-                });
+              try {
+                // Step 1: Play the hidden video to unlock autoplay
+                await silentVideo.play();
+                console.log("🎥 Silent video started");
+          
+                // Step 2: Play audio after a small delay
+                setTimeout(async () => {
+                  await mp3Audio.play();
+                  console.log("🎶 Audio playing without user interaction!");
+                }, 500);
+              } catch (err) {
+                console.log("❌ Autoplay blocked. Waiting for user interaction...", err);
+                // Fallback: Play audio when user interacts
+                document.addEventListener("click", () => mp3Audio.play(), { once: true });
+                document.addEventListener("touchstart", () => mp3Audio.play(), { once: true });
               }
-          
-              // Try autoplay immediately
-              tryPlayAudio();
-          
-              // If autoplay is blocked, retry on first user interaction
-              document.addEventListener("click", tryPlayAudio, { once: true });
-              document.addEventListener("touchstart", tryPlayAudio, { once: true });
             });
-          </script>
+          </script>          
         </div>
       </div>
       <div class="seven">
