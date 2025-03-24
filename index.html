@@ -71,7 +71,16 @@
           <audio id="audio" autoplay playsinline muted>
             <source src="./song/song.ogg" type="audio/ogg">
             Your browser does not support the audio element.
-          </audio>        
+          </audio>  
+          <script>
+            window.onload = function () {
+                setTimeout(() => {
+                    var audio = document.getElementById("audio");
+                    audio.muted = false; 
+                    audio.play().catch(err => console.log("Autoplay blocked:", err));
+                }, 1000); // Delay to allow the page to fully load
+            };
+          </script>      
         </div>
       </div>
       <div class="seven">
